@@ -1,0 +1,25 @@
+@use "../utilities" as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap');
+
+html {
+  font-size: 16px;
+  font-style: normal;
+}
+
+body {
+  font-family: $font-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+p {
+  font-weight: 400;
+}
