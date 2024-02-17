@@ -24,7 +24,13 @@ const fetchTutorials = async (): Promise<Tutorial[]> => {
 	}
 }
 
-const addFeedback = async (feedbackData: Feedback): Promise<Feedback> => {
+export interface IFeedbackData {
+	title: string,
+	detail: string,
+	tutorial?: string
+}
+
+const addFeedback = async (feedbackData: IFeedbackData): Promise<IFeedbackData> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks`, {
 			method: 'POST',
@@ -41,10 +47,11 @@ const addFeedback = async (feedbackData: Feedback): Promise<Feedback> => {
 	}
 }
 
-const likeFeedback = async (feedbackId: string): Promise<Feedback> => {
+const likeFeedback = async (feedbackId: string, username: string): Promise<Feedback> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks/${feedbackId}/like`, {
-			method: 'PUT'
+			method: 'PUT',
+			body: JSON.stringify({username})
 		})
 		const data: Feedback = await response.json()
 		return data
@@ -54,10 +61,11 @@ const likeFeedback = async (feedbackId: string): Promise<Feedback> => {
 	}
 }
 
-const dislikeFeedback = async (feedbackId: string): Promise<Feedback> => {
+const dislikeFeedback = async (feedbackId: string, username: string): Promise<Feedback> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks/${feedbackId}/dislike`, {
-			method: 'PUT'
+			method: 'PUT',
+			body: JSON.stringify({username})
 		})
 		const data: Feedback = await response.json()
 		return data
@@ -67,7 +75,10 @@ const dislikeFeedback = async (feedbackId: string): Promise<Feedback> => {
 	}
 }
 
-const addComment = async (feedbackId: string, commentData: Comment): Promise<Feedback> => {
+const addComment = async (
+	feedbackId: string,
+	commentData: Comment
+): Promise<Feedback> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks/${feedbackId}/comment`, {
 			method: 'POST',
@@ -84,7 +95,11 @@ const addComment = async (feedbackId: string, commentData: Comment): Promise<Fee
 	}
 }
 
-const addReply = async (feedbackId: string, commentId: string, replyData: Reply): Promise<Feedback> => {
+const addReply = async (
+	feedbackId: string,
+	commentId: string,
+	replyData: Reply
+): Promise<Feedback> => {
 	try {
 		const response = await fetch(
 			`${API_URL}/feedbacks/${feedbackId}/comment/${commentId}/reply`,
