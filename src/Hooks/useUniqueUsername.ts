@@ -21,7 +21,7 @@ const useUniqueUsername = () => {
 	}, [])
 
 
-    return username
+    return username as string
 }
 
 export default useUniqueUsername
