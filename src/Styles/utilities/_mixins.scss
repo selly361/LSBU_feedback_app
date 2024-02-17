@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+/* Mixin to manage responsive breakpoints */
+
+@mixin breakpoint($breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
