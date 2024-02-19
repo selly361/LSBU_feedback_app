@@ -1,38 +1,64 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { Feedback, Comment, Reply } from 'Types'
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	ReactNode
+} from 'react'
+import { Feedback, Comment, Reply, Tutorial } from 'Types'
 import * as api from 'API'
+import useUniqueUsername from 'Hooks/useUniqueUsername'
 
-type FeedbackContextType = {
+interface IFeedbackContext {
 	feedbacks: Feedback[]
+	tutorials: Tutorial[]
 	handleLike: (feedbackId: string) => void
 	handleDislike: (feedbackId: string) => void
 	addNewComment: (feedbackId: string, commentData: Comment) => void
 	addNewReply: (feedbackId: string, commentId: string, replyData: Reply) => void
+	addNewFeedback: (feedbackData: api.IFeedbackData) => void
+	isLoading: boolean,
+	setFeedbacks: React.Dispatch<React.SetStateAction<Feedback[]>>
 }
 
-const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined)
+const FeedbackContext = createContext<IFeedbackContext | undefined>(undefined)
 
-export const useFeedbackContext = () => {
+const useFeedbackContext = () => {
 	const context = useContext(FeedbackContext)
 
-	if (!context) {
-		throw new Error('useFeedbackContext must be used within a FeedbackProvider')
-	}
+	if (!context) throw new Error('useFeedbackContext must be used within a FeedbackProvider')
 
 	return context
 }
 
-type FeedbackProviderProps = {
+interface IProps {
 	children: ReactNode
 }
 
-export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
+function FeedbackProvider({ children }: IProps) {
 	const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
+	const [tutorials, setTutorials] = useState<Tutorial[]>([])
+	const [isLoading, setIsLoading] = useState(false)
+
+	const username = useUniqueUsername()
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await api.fetchFeedbacks()
-			setFeedbacks(data)
+			setIsLoading(true)
+			try {
+				const [feedbacksData, tutorialsData] = await Promise.all([
+					api.fetchFeedbacks(),
+					api.fetchTutorials()
+				])
+				setFeedbacks(feedbacksData)
+				setTutorials(tutorialsData) 
+			} catch (error) {
+				console.error('Error fetching data:', error)
+			}
+
+			finally {
+				setIsLoading(false)
+			}
 		}
 
 		fetchData()
@@ -40,7 +66,7 @@ export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
 
 	const handleLike = async (feedbackId: string) => {
 		try {
-			const updatedFeedback = await api.likeFeedback(feedbackId)
+			const updatedFeedback = await api.likeFeedback(feedbackId, username)
 			updateFeedbackState(updatedFeedback)
 		} catch (error) {
 			console.error('Error liking feedback:', error)
@@ -49,20 +75,20 @@ export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
 
 	const handleDislike = async (feedbackId: string) => {
 		try {
-			const updatedFeedback = await api.dislikeFeedback(feedbackId)
+			const updatedFeedback = await api.dislikeFeedback(feedbackId, username)
 			updateFeedbackState(updatedFeedback)
 		} catch (error) {
 			console.error('Error disliking feedback:', error)
 		}
 	}
 
-    const addNewFeedback = async (feedbackData: Feedback) => {
-        try {
-            const newFeedback = await api.addFeedback(feedbackData)
-            setFeedbacks(e => ([...e, newFeedback]))
-        } catch (error) {
-            console.error('Error adding feedback:', error)
-        }
+	const addNewFeedback = async (feedbackData: api.IFeedbackData) => {
+		try {
+			const newFeedback = (await api.addFeedback(feedbackData)) as Feedback
+			setFeedbacks((e) => [...e, newFeedback])
+		} catch (error) {
+			console.error('Error adding feedback:', error)
+		}
 	}
 
 	const addNewComment = async (feedbackId: string, commentData: Comment) => {
@@ -74,9 +100,17 @@ export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
 		}
 	}
 
-	const addNewReply = async (feedbackId: string, commentId: string, replyData: Reply) => {
+	const addNewReply = async (
+		feedbackId: string,
+		commentId: string,
+		replyData: Reply
+	) => {
 		try {
-			const updatedFeedback = await api.addReply(feedbackId, commentId, replyData)
+			const updatedFeedback = await api.addReply(
+				feedbackId,
+				commentId,
+				replyData
+			)
 			updateFeedbackState(updatedFeedback)
 		} catch (error) {
 			console.error('Error adding reply:', error)
@@ -84,7 +118,9 @@ export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
 	}
 
 	const updateFeedbackState = (updatedFeedback: Feedback) => {
-		const feedbackIndex = feedbacks.findIndex((f) => f._id === updatedFeedback._id)
+		const feedbackIndex = feedbacks.findIndex(
+			(f) => f._id === updatedFeedback._id
+		)
 		const updatedFeedbacks = [...feedbacks]
 		updatedFeedbacks[feedbackIndex] = updatedFeedback
 		setFeedbacks(updatedFeedbacks)
@@ -94,13 +130,21 @@ export const FeedbackProvider = ({ children }: FeedbackProviderProps) => {
 		<FeedbackContext.Provider
 			value={{
 				feedbacks,
+				tutorials,
 				handleLike,
 				handleDislike,
 				addNewComment,
-				addNewReply
+				addNewReply,
+				addNewFeedback,
+				isLoading,
+				setFeedbacks
 			}}
 		>
 			{children}
 		</FeedbackContext.Provider>
 	)
 }
+
+
+export default FeedbackProvider
+export { useFeedbackContext }
