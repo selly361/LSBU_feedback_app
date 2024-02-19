@@ -1,0 +1,34 @@
+.button {
+	max-height: 44px;
+	max-width: 158px;
+	color: #f2f4fe;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	padding: 12px 25px;
+	font-weight: bold;
+	cursor: pointer;
+
+	&--primary {
+		@extend .button;
+		background-color: #ad1fea;
+	}
+
+	&--secondary {
+		@extend .button;
+		background-color: #4661e6;
+	}
+
+
+	&--cancel {
+		@extend .button;
+		max-width: 93px;
+		padding: 12.5px 24.5px 11.5px 24.5px;
+		background-color: #3A4374;
+	}
+
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
