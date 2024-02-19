@@ -1,0 +1,65 @@
+@use "Styles/utilities" as *;
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:focus-visible {
+        outline: 2px dashed;
+        outline-offset: 2px;
+    }
+}
+
+
+
+button, input, fieldset, textarea {
+    outline: unset;
+    border: unset;
+    background-color: transparent;
+}
+
+a, button, input {
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline-offset: 1px;
+        outline: 1px solid #4661E6;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
