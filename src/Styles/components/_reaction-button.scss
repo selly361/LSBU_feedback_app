@@ -1,0 +1,52 @@
+.reaction-button {
+	height: 90px;
+	width: 50px;
+	background-color: #f2f4fe;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	color: #3a4374;
+	border-radius: 10px;
+	font-weight: bold;
+	position: relative;
+
+	&__like,
+	&__dislike {
+		height: 30%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		position: absolute;
+		transition: 0.5s ease background;
+
+		path {
+			transition: 0.5s ease stroke;
+		}
+
+		&--active {
+			background-color: #4661e6;
+
+			path {
+				stroke: #fff;
+			}
+		}
+	}
+
+	&__like {
+		border-top-right-radius: 10px;
+		border-top-left-radius: 10px;
+		top: 0;
+	}
+
+	&__dislike {
+		justify-content: center;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		bottom: 0;
+	}
+}
