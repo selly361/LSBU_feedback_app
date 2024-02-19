@@ -25,12 +25,14 @@ const fetchTutorials = async (): Promise<Tutorial[]> => {
 }
 
 export interface IFeedbackData {
-	title: string,
-	detail: string,
+	title: string
+	detail: string
 	tutorial?: string
 }
 
-const addFeedback = async (feedbackData: IFeedbackData): Promise<IFeedbackData> => {
+const addFeedback = async (
+	feedbackData: IFeedbackData
+): Promise<IFeedbackData> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks`, {
 			method: 'POST',
@@ -47,11 +49,17 @@ const addFeedback = async (feedbackData: IFeedbackData): Promise<IFeedbackData> 
 	}
 }
 
-const likeFeedback = async (feedbackId: string, username: string): Promise<Feedback> => {
+const likeFeedback = async (
+	feedbackId: string,
+	username: string
+): Promise<Feedback> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks/${feedbackId}/like`, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			method: 'PUT',
-			body: JSON.stringify({username})
+			body: JSON.stringify({ username })
 		})
 		const data: Feedback = await response.json()
 		return data
@@ -61,11 +69,17 @@ const likeFeedback = async (feedbackId: string, username: string): Promise<Feedb
 	}
 }
 
-const dislikeFeedback = async (feedbackId: string, username: string): Promise<Feedback> => {
+const dislikeFeedback = async (
+	feedbackId: string,
+	username: string
+): Promise<Feedback> => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks/${feedbackId}/dislike`, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			method: 'PUT',
-			body: JSON.stringify({username})
+			body: JSON.stringify({ username })
 		})
 		const data: Feedback = await response.json()
 		return data
