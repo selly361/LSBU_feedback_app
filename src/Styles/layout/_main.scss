@@ -2,7 +2,7 @@
     height: 100vh;
     width: 100vw;
 
-    &--home, &--page-not-found {
+    &--home, &--page-not-found, &--new-feedback {
         @extend .main;
     }
 
@@ -30,9 +30,13 @@
         }
 	}
 
-	// &--new-feedback {
-
-	// }
+	&--new-feedback {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 72px;
+	}
 
 	&--page-not-found {
 
