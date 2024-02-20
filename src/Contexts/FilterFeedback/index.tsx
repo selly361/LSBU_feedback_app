@@ -68,11 +68,11 @@ function FilterFeedbackProvider({ children }: IProps) {
 		} 
 		
 		else if (filter === 'Most Upvotes') {
-			setFeedbacks((e) => e.sort((a, b) => b.netLikes - a.netLikes))
+			setFeedbacks((e) => e.sort((a, b) => (b.likes.count - b.dislikes.count) - (a.likes.count - a.dislikes.count)))
 		} 
 		
 		else {
-			setFeedbacks((e) => e.sort((a, b) => b.netLikes - a.netLikes))
+			setFeedbacks((e) => e.sort((a, b) => (a.likes.count - a.dislikes.count) - (b.likes.count - b.dislikes.count)))
 		}
 
 	}, [filter])
