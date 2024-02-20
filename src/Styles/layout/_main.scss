@@ -2,7 +2,7 @@
     height: 100vh;
     width: 100vw;
 
-    &--home, &--page-not-found, &--new-feedback {
+    &--home, &--page-not-found {
         @extend .main;
     }
 
