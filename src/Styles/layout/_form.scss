@@ -55,6 +55,10 @@
 
 	&__input {
 		width: 100%;
+		
+		&:focus {
+			outline: none;
+		}
 	}
 
 	&__textarea {
