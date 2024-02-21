@@ -32,7 +32,7 @@ const Form = () => {
 
 		const newFeedback: IFeedbackData = {
 			title: getValues().title,
-			tutorial: getValues().tutorial.id,
+			tutorialId: getValues().tutorial.id,
 			detail: getValues().description,
 		} 
 
