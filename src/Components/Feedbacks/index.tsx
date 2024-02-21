@@ -1,10 +1,14 @@
-import React from 'react'
+import { useFeedbackContext } from 'Contexts'
+import Feedback from './Feedback'
 
 function Feedbacks() {
+
+  const { feedbacks } = useFeedbackContext()
+
   return (
-    <main>
-        
-    </main>
+    <div className='feedbacks'>
+        {feedbacks.map(feedbackData => <Feedback {...feedbackData} />)}
+    </div>
   )
 }
 
