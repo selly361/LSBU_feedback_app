@@ -1,0 +1,105 @@
+.feedbacks {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 5px 5px 24px 5px;
+	gap: 20px;
+
+	&__feedback {
+		width: 100%;
+		background-color: white;
+		min-height: 151px;
+		border-radius: 10px;
+		font-size: 16px;
+		font-weight: 400;
+		text-align: start;
+		padding: 28px 32px 31px 32px;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		&--active {
+			.feedbacks__feedback__container__feedback-details {
+        cursor: pointer;
+        border-radius: 10px;
+
+        &:focus-visible {
+          outline: 1px dashed #4661e6;
+        }
+
+
+				h3 {
+					transition: 0.5s ease color;
+				}
+
+				&:hover h3 {
+					color: #4661e6;
+				}
+
+				&:focus-visible {
+					outline: 2px dashed #4661e6;
+				}
+			}
+		}
+
+		&__container {
+			display: flex;
+			align-items: start;
+			gap: 40px;
+
+			&__feedback-details {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+				width: 575px;
+				padding: 5px;
+
+				div {
+					margin-top: 8px;
+				}
+
+				&__title {
+					font-size: 18px;
+					color: #3a4374;
+				}
+
+				&__desc {
+					color: #647196;
+					font-size: 16px;
+				}
+
+				&__tutorial-tag {
+					width: max-content;
+					height: 30px;
+					border-radius: 10px;
+					background: #f2f4ff;
+					color: #4661e6;
+					font-size: 13px;
+					font-weight: 600;
+
+					padding: 5px 16px 6px 16px;
+					display: grid;
+					place-items: center;
+
+					text-transform: capitalize;
+				}
+			}
+		}
+
+		&__comments-length {
+			@extend .feedbacks__feedback__container;
+			gap: 8px;
+			height: 100%;
+			align-items: center;
+
+			h5 {
+				color: #3a4374;
+				font-size: 16px;
+				letter-spacing: -0.222px;
+				font-weight: 700;
+			}
+		}
+	}
+}
