@@ -19,6 +19,7 @@ interface IFeedbackContext {
 	addNewFeedback: (feedbackData: api.IFeedbackData) => void
 	isLoading: boolean,
 	setFeedbacks: React.Dispatch<React.SetStateAction<Feedback[]>>
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const FeedbackContext = createContext<IFeedbackContext | undefined>(undefined)
@@ -137,7 +138,8 @@ function FeedbackProvider({ children }: IProps) {
 				addNewReply,
 				addNewFeedback,
 				isLoading,
-				setFeedbacks
+				setFeedbacks,
+				setIsLoading
 			}}
 		>
 			{children}
