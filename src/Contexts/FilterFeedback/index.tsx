@@ -7,10 +7,13 @@ import {
 	useRef
 } from 'react'
 import { useFeedbackContext } from 'Contexts/Feedback'
-import { Comment } from 'Types' 
+import { Comment } from 'Types'
 
-type TFilter = 'Most Upvotes' | 'Least Upvotes' | 'Most Comments' | 'Least Comments'
-
+type TFilter =
+	| 'Most Upvotes'
+	| 'Least Upvotes'
+	| 'Most Comments'
+	| 'Least Comments'
 
 interface IFilterFeedbackContext {
 	filter: TFilter
@@ -20,13 +23,17 @@ interface IFilterFeedbackContext {
 	setToggle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const FilterFeedbackContext = createContext<IFilterFeedbackContext | undefined>(undefined)
-
+const FilterFeedbackContext = createContext<IFilterFeedbackContext | undefined>(
+	undefined
+)
 
 const useFilterFeedbackContext = () => {
 	const context = useContext(FilterFeedbackContext)
 
-	if (!context) throw new Error('useFeedbackContext must be used within a FilterFeedbackProvider')
+	if (!context)
+		throw new Error(
+			'useFeedbackContext must be used within a FilterFeedbackProvider'
+		)
 
 	return context
 }
@@ -36,8 +43,7 @@ interface IProps {
 }
 
 function FilterFeedbackProvider({ children }: IProps) {
-
-	const { setFeedbacks, feedbacks } = useFeedbackContext()
+	const { setFeedbacks, feedbacks, setIsLoading } = useFeedbackContext()
 
 	const [filter, setFilter] = useState<TFilter>('Most Upvotes')
 	const [toggle, setToggle] = useState(false)
@@ -59,34 +65,52 @@ function FilterFeedbackProvider({ children }: IProps) {
 
 	useEffect(() => {
 
+		if(feedbacks.length == 0) return
+
+		const sortedFeedbacks = [...feedbacks] 
+		setIsLoading(true)
+
 		if (filter === 'Most Comments') {
-			setFeedbacks((e) => e.sort((a, b) => commentsLength(b.comments) - commentsLength(a.comments)))
-		} 
-		
-		else if (filter === 'Least Comments') {
-			setFeedbacks((e) => e.sort((a, b) => commentsLength(a.comments) - commentsLength(b.comments)))
-		} 
-		
-		else if (filter === 'Most Upvotes') {
-			setFeedbacks((e) => e.sort((a, b) => (b.likes.count - b.dislikes.count) - (a.likes.count - a.dislikes.count)))
-		} 
-		
-		else {
-			setFeedbacks((e) => e.sort((a, b) => (a.likes.count - a.dislikes.count) - (b.likes.count - b.dislikes.count)))
+			sortedFeedbacks.sort(
+				(a, b) => commentsLength(b.comments) - commentsLength(a.comments)
+			)
+		} else if (filter === 'Least Comments') {
+			sortedFeedbacks.sort(
+				(a, b) => commentsLength(a.comments) - commentsLength(b.comments)
+			)
+		} else if (filter === 'Most Upvotes') {
+			sortedFeedbacks.sort(
+				(a, b) =>
+					b.likes.count - b.dislikes.count - (a.likes.count - a.dislikes.count)
+			)
+		} else {
+			sortedFeedbacks.sort(
+				(a, b) =>
+					a.likes.count - a.dislikes.count - (b.likes.count - b.dislikes.count)
+			)
 		}
 
-	}, [filter])
+		setFeedbacks(sortedFeedbacks)
 
-	const commentsLength = (comments: Comment[]) => comments.reduce((prev, curr) => prev + (curr.replies.length || 0), comments.length)
+		setTimeout(() => {
+			setIsLoading(false)
+		}, 400)
+	}, [filter, JSON.stringify(feedbacks)])
 
+	const commentsLength = (comments: Comment[]) =>
+		comments.reduce(
+			(prev, curr) => prev + (curr.replies.length || 0),
+			comments.length
+		)
 
 	return (
-		<FilterFeedbackContext.Provider value={{ filter, setFilter, modalRef, toggle, setToggle }}>
+		<FilterFeedbackContext.Provider
+			value={{ filter, setFilter, modalRef, toggle, setToggle }}
+		>
 			{children}
 		</FilterFeedbackContext.Provider>
 	)
 }
-
 
 export default FilterFeedbackProvider
 export { useFilterFeedbackContext }
