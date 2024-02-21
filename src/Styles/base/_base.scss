@@ -3,9 +3,6 @@
 body {
 	width: 100vw;
 	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	background-color: #F7F8FD;
 	overflow-x: hidden;
 }
@@ -18,11 +15,9 @@ textarea {
 	background-color: #F7F8FD;
 	border: 1px solid transparent;
 	padding: 13px 0 13px 24px;
-
 	color: #3a4374;
 	font-size: 15px;
 	font-weight: 400;
-
 	transition: 0.5s ease border;
 
 	&:focus-visible {
