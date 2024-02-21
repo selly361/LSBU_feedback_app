@@ -27,12 +27,12 @@ const fetchTutorials = async (): Promise<Tutorial[]> => {
 export interface IFeedbackData {
 	title: string
 	detail: string
-	tutorial?: string
+	tutorialId: string
 }
 
 const addFeedback = async (
 	feedbackData: IFeedbackData
-): Promise<IFeedbackData> => {
+) => {
 	try {
 		const response = await fetch(`${API_URL}/feedbacks`, {
 			method: 'POST',
