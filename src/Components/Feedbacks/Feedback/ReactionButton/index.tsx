@@ -1,22 +1,20 @@
 import { ArrowDownIcon, ArrowUpIcon } from 'Assets/Icons'
 import { useFeedbackContext } from 'Contexts/Feedback';
 import useUniqueUsername from 'Hooks/useUniqueUsername'
-import React, { useState } from 'react'
+import { MouseEvent } from 'react'
 
 interface IProps {
 	likes: { count: number; users: string[] }
 	dislikes: { count: number; users: string[] }
-	netLikes: number
     feedbackId: string | undefined
 }
 
-function ReactionButton({ likes, dislikes, netLikes, feedbackId }: IProps) {
+function ReactionButton({ likes, dislikes, feedbackId }: IProps) {
 	const userName = useUniqueUsername()
 
     const activeLike = likes.users.includes(userName)
     const activeDislike = dislikes.users.includes(userName)
 
-	console.log(likes, dislikes)
 
     const { handleLike, handleDislike } = useFeedbackContext()
 
