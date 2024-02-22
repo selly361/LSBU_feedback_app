@@ -8,3 +8,4 @@ export { ReactComponent as FeedbacksIcon } from "./icon-feedbacks.svg";
 export { ReactComponent as EmptyIllustration } from "./illustration-empty.svg";
 export { ReactComponent as ConfusedFace } from "./confused-face.svg";
 export { ReactComponent as Arrow } from "./arrow.svg";
+export { ReactComponent as PersonIcon } from "./icon-person.svg";
