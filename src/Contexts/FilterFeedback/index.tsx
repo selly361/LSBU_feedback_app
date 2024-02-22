@@ -7,7 +7,7 @@ import {
 	useRef
 } from 'react'
 import { useFeedbackContext } from 'Contexts/Feedback'
-import { Comment } from 'Types'
+import { commentsLength } from 'Utils/commentsLength'
 
 type TFilter =
 	| 'Most Upvotes'
@@ -96,12 +96,6 @@ function FilterFeedbackProvider({ children }: IProps) {
 			setIsLoading(false)
 		}, 400)
 	}, [filter, JSON.stringify(feedbacks)])
-
-	const commentsLength = (comments: Comment[]) =>
-		comments.reduce(
-			(prev, curr) => prev + (curr.replies.length || 0),
-			comments.length
-		)
 
 	return (
 		<FilterFeedbackContext.Provider
