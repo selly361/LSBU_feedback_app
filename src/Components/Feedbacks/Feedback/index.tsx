@@ -4,6 +4,7 @@ import { Feedback as IFeedback, Comment } from 'Types'
 import { CommentsIcon } from 'Assets/Icons'
 import { KeyboardEvent } from 'react'
 import { useFeedbackContext } from 'Contexts'
+import { commentsLength } from 'Utils/commentsLength'
 
 function Feedback({
 	_id,
@@ -31,12 +32,6 @@ function Feedback({
 			}
 		}
 	}
-
-	const commentsLength = (comments: Comment[]) =>
-		comments.reduce(
-			(prev, curr) => prev + (curr.replies.length || 0),
-			comments.length
-		)
 
 	const tutorialData = tutorials.find((t) => t._id === tutorial)
 

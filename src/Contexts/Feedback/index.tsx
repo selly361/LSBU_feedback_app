@@ -8,6 +8,7 @@ import {
 import { Feedback, Comment, Reply, Tutorial } from 'Types'
 import * as api from 'API'
 import useUniqueUsername from 'Hooks/useUniqueUsername'
+import { useLocation } from 'react-router-dom'
 
 interface IFeedbackContext {
 	feedbacks: Feedback[]
@@ -41,6 +42,8 @@ function FeedbackProvider({ children }: IProps) {
 	const [tutorials, setTutorials] = useState<Tutorial[]>([])
 	const [isLoading, setIsLoading] = useState(false)
 
+	const location = useLocation()
+
 	const username = useUniqueUsername()
 
 	useEffect(() => {
@@ -63,7 +66,7 @@ function FeedbackProvider({ children }: IProps) {
 		}
 
 		fetchData()
-	}, [])
+	}, [location.pathname])
 
 	const handleLike = async (feedbackId: string) => {
 		try {
