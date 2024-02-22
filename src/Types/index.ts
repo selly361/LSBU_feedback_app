@@ -25,6 +25,7 @@ export interface Reply {
 	_id?: string
 	username: string
 	text: string
+	replyingTo: string
 }
 
 export interface Tutorial {
