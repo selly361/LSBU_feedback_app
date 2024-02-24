@@ -24,12 +24,20 @@
 		position: absolute;
 		transition: 0.5s ease background;
 
+		svg {
+			transition: transform .3s ease-in-out;
+		}
+
 		path {
 			transition: 0.5s ease stroke;
 		}
 
 		&--active {
-			background-color: #4661e6;
+			background-color: #4661e6 !important;
+
+			svg {
+				transform: scale(1.3);
+			}
 
 			path {
 				stroke: #fff;
