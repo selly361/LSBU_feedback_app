@@ -1,17 +1,19 @@
 import FilterDropDown from './FilterDropDown'
 import { ArrowDownIcon, FeedbacksIcon } from 'Assets/Icons'
 import { useFeedbackContext, useFilterFeedbackContext } from 'Contexts'
+import { useScreenSize } from 'Hooks/useScreenSize'
 import { Link } from 'react-router-dom'
 
 function FeedbackHeader() {
 	const { filter, modalRef, setToggle, toggle } = useFilterFeedbackContext()
 	const { feedbacks } = useFeedbackContext()
+	const { isDesktopSize } = useScreenSize()
 
 	return (
 		<section className='feedback-header'>
 			<div className='feedback-header__container'>
 				<FeedbacksIcon />
-				<h3 className='feedback-header__container__number-of-feedbacks'>{feedbacks.length} {feedbacks.length === 1 ? 'Feedback' : 'Feedbacks'}</h3>
+				{isDesktopSize ? <h3 className='feedback-header__container__number-of-feedbacks'>{feedbacks.length} {feedbacks.length === 1 ? 'Feedback' : 'Feedbacks'}</h3> : null}
 			</div>
 			<button
 				onClick={() => setToggle((e) => !e)}

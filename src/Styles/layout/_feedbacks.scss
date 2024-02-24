@@ -1,3 +1,5 @@
+@use 'Styles/utilities' as *;
+
 .feedbacks {
 	width: 100%;
 	height: 100%;
@@ -88,17 +90,46 @@
 			}
 		}
 
-		&__comments-length {
-			@extend .feedbacks__feedback__container;
-			gap: 8px;
-			height: 100%;
-			align-items: center;
+		&__bottom-section {
 
-			h5 {
-				color: #3a4374;
-				font-size: 16px;
-				letter-spacing: -0.222px;
-				font-weight: 700;
+			&__comments-length {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				height: 100%;
+	
+				h5 {
+					color: #3a4374;
+					font-size: 16px;
+					letter-spacing: -0.222px;
+					font-weight: 700;
+				}
+			}
+
+		}
+
+	}
+
+
+	@include breakpoint(md) {
+		&__feedback {
+			flex-direction: column;
+			padding: 24px;
+			gap: 14px;
+
+			&__container {
+				width: 100%;
+
+				&__feedback-details {
+					width: 100%;
+				}
+			}
+
+
+			&__bottom-section {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
 			}
 		}
 	}

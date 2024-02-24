@@ -71,4 +71,11 @@
 		position: absolute;
 		right: 16px;
 	}
+
+
+	@include breakpoint(md) {
+		&__container {
+			margin-right: 0px;
+		}
+	}
 }

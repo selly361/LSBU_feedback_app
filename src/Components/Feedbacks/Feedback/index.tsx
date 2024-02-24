@@ -5,6 +5,7 @@ import { CommentsIcon } from 'Assets/Icons'
 import { KeyboardEvent } from 'react'
 import { useFeedbackContext } from 'Contexts'
 import { commentsLength } from 'Utils/commentsLength'
+import { useScreenSize } from 'Hooks/useScreenSize'
 
 function Feedback({
 	_id,
@@ -18,6 +19,7 @@ function Feedback({
 	const navigate = useNavigate()
 	const location = useLocation()
 	const { tutorials } = useFeedbackContext()
+	const { isDesktopSize } = useScreenSize()
 
 	const handleClick = () => {
 		if (location.pathname === '/') {
@@ -42,7 +44,7 @@ function Feedback({
 			}`}
 		>
 			<div className='feedbacks__feedback__container'>
-				<ReactionButton {...{ likes, dislikes, feedbackId: _id }} />
+				{isDesktopSize ? <ReactionButton {...{ likes, dislikes, feedbackId: _id }} /> : null}
 				<a
 					onKeyDown={(e: KeyboardEvent<HTMLAnchorElement>) => handleKeyPress(e)}
 					onClick={handleClick}
@@ -58,10 +60,13 @@ function Feedback({
 					<div className='feedbacks__feedback__container__feedback-details__tutorial-tag'>{`${tutorialData?.name} - ${tutorialData?.lesson}`}</div>
 				</a>
 			</div>
-			<div className='feedbacks__feedback__comments-length'>
-				<CommentsIcon />
-				<h5>{commentsLength(comments)}</h5>
-			</div>
+			<section className='feedbacks__feedback__bottom-section'>
+				{!isDesktopSize ? <ReactionButton {...{ likes, dislikes, feedbackId: _id }} /> : null}
+				<div className='feedbacks__feedback__bottom-section__comments-length'>
+					<CommentsIcon />
+					<h5>{commentsLength(comments)}</h5>
+				</div>
+			</section>
 		</div>
 	)
 }

@@ -1,3 +1,5 @@
+@use 'Styles/utilities' as *;
+
 .reaction-button {
 	height: 90px;
 	width: 50px;
@@ -56,5 +58,36 @@
 		border-bottom-right-radius: 10px;
 		border-bottom-left-radius: 10px;
 		bottom: 0;
+	}
+
+
+	@include breakpoint(md) {
+		height: 40px;
+		width: 105px;
+		flex-direction: row;
+
+
+		&__like,
+		&__dislike {
+			width: 30%;
+			height: 100%;
+			}
+		
+
+		&__like {
+			border-radius: 0;
+			left: 0;
+
+			border-top-left-radius: 10px;
+			border-bottom-left-radius: 10px;
+		}
+	
+		&__dislike {
+			border-radius: 0;
+			right: 0;
+
+			border-top-right-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
 	}
 }
