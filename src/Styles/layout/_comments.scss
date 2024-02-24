@@ -20,12 +20,7 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        gap: 32px;
-      
-        &:not(:last-child) {
-          border-bottom: 1px solid rgba(140, 146, 179, 0.25);
-             padding-bottom: 90px;
-    }
+        gap: 12px;
       
         &--replies::before {
           content: "";
@@ -33,10 +28,9 @@
           width: 1px;
           opacity: 0.10000000149011612;
           background: #647196;
-          height: calc(100% - 141px);
+          height: calc(100% - 60px);
           left: 20px;
           top: 63px;
-
         }
     }
 
@@ -44,17 +38,19 @@
     &__comment {
         min-width: 100%;
         display: flex;
-        gap: 22px;
+        gap: 12px;
         align-items: start;
 
         &__container {
             width: 100%;
             display: grid;
             grid-template: auto auto auto / auto auto;
-            row-gap: 17px;
+            row-gap: 12px;
         
             &__sub-container {
-                grid-area: 1/1/1/1;
+                display: flex;
+                align-items: center;
+                width: max-content;
             }
         }
     }   
