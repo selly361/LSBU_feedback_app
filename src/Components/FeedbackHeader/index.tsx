@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom'
 function FeedbackHeader() {
 	const { filter, modalRef, setToggle, toggle } = useFilterFeedbackContext()
 	const { feedbacks } = useFeedbackContext()
-	const { isDesktopSize } = useScreenSize()
+	const { isDesktopSize, isMobileSize } = useScreenSize()
 
 	return (
 		<section className='feedback-header'>
-			<div className='feedback-header__container'>
+			{!isMobileSize ? <div className='feedback-header__container'>
 				<FeedbacksIcon />
 				{isDesktopSize ? <h3 className='feedback-header__container__number-of-feedbacks'>{feedbacks.length} {feedbacks.length === 1 ? 'Feedback' : 'Feedbacks'}</h3> : null}
-			</div>
+			</div> : null}
 			<button
 				onClick={() => setToggle((e) => !e)}
 				ref={modalRef}

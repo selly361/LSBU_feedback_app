@@ -74,6 +74,10 @@
 
 
 	@include breakpoint(md) {
+
+		padding: 0 24px;
+		justify-content: space-between;
+
 		&__container {
 			margin-right: 0px;
 		}
