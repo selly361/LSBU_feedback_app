@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 function FeedbackHeader() {
 	const { filter, modalRef, setToggle, toggle } = useFilterFeedbackContext()
-	const { feedbacks } = useFeedbackContext()
+	const { feedbacks, isLoading } = useFeedbackContext()
 	const { isDesktopSize, isMobileSize } = useScreenSize()
 
 	return (
@@ -16,6 +16,7 @@ function FeedbackHeader() {
 				{isDesktopSize ? <h3 className='feedback-header__container__number-of-feedbacks'>{feedbacks.length} {feedbacks.length === 1 ? 'Feedback' : 'Feedbacks'}</h3> : null}
 			</div> : null}
 			<button
+				disabled={isLoading}
 				onClick={() => setToggle((e) => !e)}
 				ref={modalRef}
 				className={`feedback-header__sort-button ${toggle ? 'feedback-header__sort-button--active' : ''}`}
