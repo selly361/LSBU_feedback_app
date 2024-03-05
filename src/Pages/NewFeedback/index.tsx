@@ -4,9 +4,9 @@ import { useFeedbackContext } from 'Contexts'
 
 function NewFeedback() {
 
-  const { isLoading } = useFeedbackContext()
+  const { isLoading, tutorials } = useFeedbackContext()
 
-  if(isLoading) {
+  if(isLoading || tutorials.length === 0) {
     return (
       <main className='main--home'>
         <Loading />
